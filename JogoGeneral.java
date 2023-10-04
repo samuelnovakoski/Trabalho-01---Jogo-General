@@ -42,6 +42,7 @@ public class JogoGeneral implements Serializable{
     }
 
     public int getTotal(){
+        total = 0;
         for(int i = 0; i < 13; i++)
             if(getJogadas()[i] != -1)
                 total += getJogadas()[i];
@@ -49,7 +50,7 @@ public class JogoGeneral implements Serializable{
     }
 
     public void validarJogada(int x){
-    
+        Scanner scanner = new Scanner(System.in);
         while(x < 1 || x > 13 || jogadas[x - 1] != -1){
             if(x < 1 || x > 13)
                 System.out.println("jogada invalida por favor insira uma jogada valida");
