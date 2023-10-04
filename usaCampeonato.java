@@ -43,11 +43,11 @@ public class usaCampeonato{
             break;
           case 'e':
             //gravar em arquivo
-            campeonato.gravarEmArquivo(campeonato);
+            // campeonato.gravarEmArquivo();
             break;
           case 'f':
             //ler arquivo
-            campeonato.lerDoArquivo();
+            // campeonato.lerDoArquivo();
             break;
       }
     }while(opcao != 'g');
