@@ -5,7 +5,7 @@ public class Jogador implements Serializable{
     private String nome;
     private String tipo;
     private JogoGeneral jogoG = new JogoGeneral();
-    private transient Scanner scanner;
+    private transient Scanner scanner = new Scanner(System.in);
     
     public Jogador(JogoGeneral jogoG){
         this.jogoG = jogoG;
