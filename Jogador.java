@@ -1,10 +1,10 @@
 import java.util.Scanner;
+import java.io.Serializable;
 
-public class Jogador {
+public class Jogador implements Serializable{
     private String nome;
     private String tipo;
     private JogoGeneral jogoG = new JogoGeneral();
-    private static Scanner scanner = new Scanner(System.in);
     
     public Jogador(){
         setNome();
@@ -18,6 +18,7 @@ public class Jogador {
     }
 
     public void setNome(){
+        Scanner scanner = new Scanner(System.in);
         System.out.print("Insira o nome do jogador: ");
         this.nome = scanner.nextLine();
     }
@@ -27,19 +28,20 @@ public class Jogador {
     }
 
     public void setTipo(){
+        Scanner scanner = new Scanner(System.in);
         System.out.print("Insira o tipo do jogador: [H - Humano | M - Maquina] ");
         validarTipo(scanner.nextLine());
     }
 
     public void validarTipo(String tipo){
-        if(tipo.charAt(0) != 'H' && tipo.charAt(0) != 'M')
+        if(tipo.charAt(0) != 'H'  && tipo.charAt(0) != 'h' && tipo.charAt(0) != 'M')
             System.out.print("Tipo invalido por favor insira um tipo valido");
         else
             this.tipo = tipo;
     }
 
     public char getTipo(){
-        return tipo.toUpperCase().charAt(0);
+        return tipo.charAt(0);
     }
 
     public JogoGeneral getJogo(){
@@ -64,7 +66,8 @@ public class Jogador {
     }
 
     public void escolherJogada(){
-        if(getTipo() == 'H'){
+        Scanner scanner = new Scanner(System.in);
+        if(getTipo() == 'H' || getTipo() == 'h'){
             System.out.println(toString());
             int x;
             do{
@@ -72,5 +75,7 @@ public class Jogador {
                 jogoG.validarJogada(x);
             }while(x < 1 || x > 13 || jogoG.getJogadas()[x - 1] != -1);
         }
+        else
+            System.out.println("Maquina") ;
     }
 }
