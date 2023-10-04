@@ -1,4 +1,6 @@
-public class JogoGeneral {
+import java.io.Serializable;
+
+public class JogoGeneral implements Serializable{
     private Dado dados[] = new Dado[5];
     private int jogadas[] = new int[13];
     private int total = 0;
@@ -169,7 +171,7 @@ public class JogoGeneral {
         }
         if(resultado == 0)
             System.out.println("seus valores nao cumprem o requisito para esta jogada!\n");
-        jogadas[x - 1] = resultado;
+        jogadas[x] = resultado;
     }
 }
 
