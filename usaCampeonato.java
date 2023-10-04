@@ -43,7 +43,7 @@ public class usaCampeonato{
             break;
           case 'e':
             //gravar em arquivo
-            // campeonato.gravarEmArquivo();
+            campeonato.gravarEmArquivo(campeonato);
             break;
           case 'f':
             //ler arquivo
