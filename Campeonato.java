@@ -12,8 +12,6 @@ public class Campeonato implements Serializable{
     private JogoGeneral[] jogo = new JogoGeneral[10];
     private int qntJogadores = 0;
     private File file = new File("general.dat");
-    private transient Scanner scanner = new Scanner(System.in);
-
 
     public void incluirJogador(){   
         int cont = 0;
@@ -37,27 +35,29 @@ public class Campeonato implements Serializable{
     }
 
     public void removerJogador(){
-        System.out.print("Lista de jogadores: ");
-        listaJogadores();
-        System.out.print("Informe o nome do jogador que deseja remover: ");
-        String nome = scanner.nextLine();
-        int removido = 0;
+        try (Scanner scanner = new Scanner(System.in)) {
+            System.out.print("Lista de jogadores: ");
+            listaJogadores();
+            System.out.print("Informe o nome do jogador que deseja remover: ");
+            String nome = scanner.nextLine();
+            int removido = 0;
 
-        for(int i = 0; i < qntJogadores; i++)
-            if(jogadores[i].getNome().equals(nome)){
-                for(int j = i; j < qntJogadores; j++)
-                    jogadores[j] = jogadores[j + 1];
-                
-                    jogadores[qntJogadores - 1] = null;
-                    qntJogadores--;
-                    removido++;
+            for(int i = 0; i < qntJogadores; i++)
+                if(jogadores[i].getNome().equals(nome)){
+                    for(int j = i; j < qntJogadores; j++)
+                        jogadores[j] = jogadores[j + 1];
+                    
+                        jogadores[qntJogadores - 1] = null;
+                        qntJogadores--;
+                        removido++;
 
-                System.out.println("\nJogador removido com suceso!");
-                break;
-            }
-        
-        if(removido == 0)
-            System.out.println("Nao foi possivel encontrar o jogador " + nome);
+                    System.out.println("\nJogador removido com suceso!");
+                    break;
+                }
+            
+            if(removido == 0)
+                System.out.println("Nao foi possivel encontrar o jogador " + nome);
+        }
     }
 
     public void iniciarCampeonato(){
@@ -100,13 +100,13 @@ public class Campeonato implements Serializable{
         System.out.println();
     }
 
-    public void gravarEmArquivo(){
+    public void gravarEmArquivo(Campeonato camp){
         try{
             FileOutputStream fout = new FileOutputStream(file);
             ObjectOutputStream oos = new ObjectOutputStream(fout);
 
 
-            oos.writeObject(this);
+            oos.writeObject(camp);
             // oos.writeObject(jogadores);
             // oos.writeObject(jogo);
             oos.flush();
@@ -140,7 +140,8 @@ public class Campeonato implements Serializable{
                 this.jogadores[i] = camp.jogadores[i];
                 this.jogo[i] = camp.jogo[i];
                 this.qntJogadores = camp.qntJogadores;
-                this.scanner = new Scanner(System.in);
+                //this.scanner = new Scanner(System.in);
+                
             }
 
             //camp.mostrarCartela();
