@@ -9,9 +9,8 @@ import java.io.Serializable;
 
 public class Campeonato implements Serializable {
     private Jogador[] jogador = new Jogador[10];
-    private Scanner scanner = new Scanner(System.in);
-
     private int qntJogadores = 0;
+    private File file = new File("general.dat");
 
     public void incluirJogador(){
         int cont = 0;
@@ -32,17 +31,18 @@ public class Campeonato implements Serializable {
     }
 
     public void removerJogador(){
+        Scanner scanner = new Scanner(System.in);
         listaJogadores();
         System.out.println("Informe o nome do jogador que deseja remover: ");
         String nome = scanner.nextLine();
         int removido = 0;
 
-        for(int i = 0; i < jogador.length; i++)
+        for(int i = 0; i < qntJogadores; i++)
             if(jogador[i].getNome().equals(nome)){
-                for(int j = i; j < jogador.length; j++)
+                for(int j = i; j < qntJogadores; j++)
                     jogador[j] = jogador[j + 1];
                 
-                jogador[jogador.length - 1] = null;
+                jogador[qntJogadores - 1] = null;
                 qntJogadores--;
                 removido++;
 
@@ -54,8 +54,8 @@ public class Campeonato implements Serializable {
     }
 
     public void listaJogadores(){
-        for(int i = 0; i < jogador.length; i++)
-            if(i < jogador.length - 1)
+        for(int i = 0; i < qntJogadores; i++)
+            if(i < qntJogadores - 1)
                 System.out.print(jogador[i].getNome() + " - ");
             else
                 System.out.println(jogador[i].getNome());
@@ -63,7 +63,7 @@ public class Campeonato implements Serializable {
 
     public void iniciarCampeonato(){
         for(int i = 0; i < 13; i++)
-            for(int j = 0; j < jogador.length; j++){
+            for(int j = 0; j < qntJogadores; j++){
                 System.out.print("rolando dados para " + jogador[j].getNome() + "(" + jogador[j].getTipo() + ")...\n");
                 jogador[j].jogarDados();
                 jogador[j].escolherJogada();
@@ -78,7 +78,7 @@ public class Campeonato implements Serializable {
         
         for(int i = 0; i < 13; i++){
             System.out.print("\n" + (i + 1));
-            for(int j = 0; j < jogador.length; j++){
+            for(int j = 0; j < qntJogadores; j++){
                 if(jogador[j].getJogo().getJogadas()[i] != -1)
                     System.out.print("\t" + jogador[j].getJogo().getJogadas()[i]);
                 else
@@ -88,7 +88,25 @@ public class Campeonato implements Serializable {
 
         System.out.println("\n-----------------------------");
         System.out.print("Total: ");
-        for(int i = 0; i < jogador.length; i++)
+        for(int i = 0; i < qntJogadores; i++)
             System.out.print("\t" + jogador[i].getJogo().getTotal() + "\n");
+    }
+
+    public void gravarEmArquivo(Campeonato camp){
+        try{
+            FileOutputStream fout = new FileOutputStream(file);
+            ObjectOutputStream oos = new ObjectOutputStream(fout);
+
+            oos.writeObject(camp);
+
+            oos.flush();
+            oos.close();
+            fout.close();
+
+            System.out.println("Dados Gravados com sucesso!");
+        }
+        catch(Exception e){
+            System.err.println("erro: " + e.toString());
+        }
     }
 }
