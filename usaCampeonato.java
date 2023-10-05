@@ -49,6 +49,9 @@ public class usaCampeonato{
             //ler arquivo
             campeonato.lerDoArquivo();
             break;
+        case 'g':
+            System.out.println("Obrigado por jogar!\n");
+            break;
         default:
             System.out.println("Opcao invalida!");
       }
