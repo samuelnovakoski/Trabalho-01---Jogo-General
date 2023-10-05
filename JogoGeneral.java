@@ -1,4 +1,7 @@
 import java.io.Serializable;
+import java.lang.reflect.Array;
+import java.util.Scanner;
+import java.util.Arrays;
 
 public class JogoGeneral implements Serializable{
     private Dado dados[] = new Dado[5];
@@ -7,7 +10,7 @@ public class JogoGeneral implements Serializable{
     private int resultado = 0;
     
     public JogoGeneral(){
-        for(int i = 0; i < jogadas.length; i++)
+        for(int i = 0; i < 13; i++)
             jogadas[i] = -1;
     }
 
@@ -40,6 +43,7 @@ public class JogoGeneral implements Serializable{
     }
 
     public int getTotal(){
+        total = 0;
         for(int i = 0; i < 13; i++)
             if(getJogadas()[i] != -1)
                 total += getJogadas()[i];
@@ -47,12 +51,17 @@ public class JogoGeneral implements Serializable{
     }
 
     public void validarJogada(int x){
-        if(x < 1 || x > 13)
-            System.out.println("jogada invalida por favor insira uma jogada valida");
-        else if(jogadas[x - 1] != -1)
-            System.out.println("A essa jogada já foi feita, por favor insira uma jogada que ainda não foi realizada");
-        else
-            pontuarJogada(x);
+        Scanner scanner = new Scanner(System.in);
+        
+        while(x < 1 || x > 13 || jogadas[x - 1] != -1){
+            if(x < 1 || x > 13)
+                System.out.println("jogada invalida por favor insira uma jogada valida");
+            else if(jogadas[x - 1] != -1)
+                System.out.println("A essa jogada já foi feita, por favor insira uma jogada que ainda não foi realizada");
+            
+            x = scanner.nextInt();
+        };
+        pontuarJogada(x);
     }
 
     private void pontuarJogada(int x) {
@@ -89,89 +98,120 @@ public class JogoGeneral implements Serializable{
                         resultado += dados[i].getSideUp();
                 break;
             case 7:
-                for(int i = 0; i < dados.length; i++){
-                    int trinca = 0;
+                boolean trinca = false;
+                for(int i = 1; i <= 6; i++){
+                    int contagem = 0;
 
                     for(int j = 0; j < dados.length; j++)
-                        if(dados[i].getSideUp() == dados[j].getSideUp())
-                            trinca++;
-                    if(trinca >= 3)
-                        for(i = 0; i < dados.length; i++)
-                            resultado += dados[i].getSideUp();
+                        if(dados[j].getSideUp() == i)
+                            contagem++;
+                    
+                    if(contagem >= 3)
+                        trinca = true;
                 }
+                if(trinca == true)
+                    for(int i = 0; i < dados.length; i++)
+                        resultado += dados[i].getSideUp();
+
                 break;
             case 8:
-                for(int i = 0; i < dados.length; i++){
-                    int quadra = 0;
-
+                boolean quadra = false;
+                
+                for(int i = 1; i <= 6; i++){
+                    int contagem = 0;
                     for(int j = 0; j < dados.length; j++)
-                        if(dados[i].getSideUp() == dados[j].getSideUp())
-                            quadra++;
-                    if(quadra >= 4)
-                        for(i = 0; i < dados.length; i++)
-                            resultado += dados[i].getSideUp();
+                        if(dados[j].getSideUp() == i)
+                            contagem++;
+                    if(contagem >= 4)
+                        quadra = true;
                 }
+
+                if(quadra == true)
+                        for(int i = 0; i < dados.length; i++)
+                            resultado += dados[i].getSideUp();
                 break;
             case 9:
-                for(int i = 0; i < dados.length; i++){
-                    int trinca = 0;
-                    int par = 0;
-                    int d1;
+                trinca = false;
+                boolean par = false;
+
+                for(int i = 1; i <= 6; i++){
+                    int contagem = 0;
 
                     for(int j = 0; j < dados.length; j++)
-                        if(dados[i].getSideUp() == dados[j].getSideUp()){
-                            trinca++;
-                            d1 = dados[i].getSideUp();
-                            if(dados[i].getSideUp() != d1)
-                                par++;
-                        }
-                    if(trinca == 3 && par == 2)
-                        resultado = 25;
+                        if(dados[j].getSideUp() == i)
+                            contagem++;
+                    
+                    if(contagem == 3)
+                        trinca = true;
+                    else if(contagem == 2)
+                        par = true;
                 }
+
+                if(trinca == true && par == true)
+                    resultado = 25;
                 break;
             case 10:
-                int sequencia = 0;
-                for(int i = 0; i < dados.length - 1; i++)
-                    if(dados[i].getSideUp() + 1 != dados[i + 1].getSideUp()) 
-                        sequencia = 1;
-                
-                if(sequencia == 0)
-                    if(dados[0].getSideUp() == 2)
-                        resultado = 30;
+                ordenarDados();
+                boolean sequencia = true;
 
+                for(int i = 0; i < dados.length - 1; i++){
+                    if(dados[i].getSideUp() + 1 != dados[i + 1].getSideUp()) 
+                        sequencia = false;
+                }
+                
+                if(sequencia == true)
+                    if(dados[0].getSideUp() == 1)
+                        resultado = 40;
+                
                 break;
             case 11:
-                sequencia = 0;
-                for(int i = 0; i < dados.length - 1; i++)
+                ordenarDados();
+                sequencia = true;
+                for(int i = 0; i < dados.length - 1; i++){
                     if(dados[i].getSideUp() + 1 != dados[i + 1].getSideUp()) 
-                        sequencia = 1;
+                        sequencia = false;
+                }
                 
-                if(sequencia == 0)
+                if(sequencia == true)
                     if(dados[0].getSideUp() == 1)
                         resultado = 40;
                 
                 break;
             case 12:
-                for(int i = 0; i < dados.length; i++){
-                    int general = 0;
+                boolean general = false;
+                for(int i = 0; i < 6; i++){
+                    int contagem = 0; 
 
                     for(int j = 0; j < dados.length; j++)
-                        if(dados[i].getSideUp() == dados[j].getSideUp())
-                            general++;
-                    if(general == 5)
-                        resultado = 50;
+                        if(dados[j].getSideUp() == i)
+                            contagem++;
+                    if(contagem == 5)
+                        general = true;
                 }
+
+                if(general)
+                    resultado = 50;
                 break;
             case 13:
                 for(int i = 0; i < dados.length; i++){
                     resultado += dados[i].getSideUp();
                 }
                 break;
-
+            default:
+                System.out.println("Opcao invalida!");
         }
         if(resultado == 0)
             System.out.println("seus valores nao cumprem o requisito para esta jogada!\n");
-        jogadas[x] = resultado;
+        jogadas[x - 1] = resultado;
+    }
+
+    public void ordenarDados(){
+        for(int i = 0; i < dados.length; i++)
+            for(int j = 0; j < dados.length - 1; j++)
+                if(dados[j].getSideUp() > dados[j + 1].getSideUp()){
+                    Dado aux = dados[j];
+                    dados[j] = dados[j + 1];
+                    dados[j + 1] = aux;
+                }
     }
 }
-
