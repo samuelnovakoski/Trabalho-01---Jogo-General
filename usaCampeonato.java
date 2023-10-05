@@ -25,30 +25,32 @@ public class usaCampeonato{
       opcao = scanner.nextLine().charAt(0);
 
       switch(opcao){
-          case 'a': 
+        case 'a': 
             //novo jogador
             campeonato.incluirJogador();
             break;
-          case 'b':
+        case 'b':
             //remover jogador
             campeonato.removerJogador();
             break;
-          case 'c':
+        case 'c':
             // executa jogada
             campeonato.iniciarCampeonato();
             break;
-          case 'd':
+        case 'd':
             //mostra cartela de resultados
             campeonato.mostrarCartela();
             break;
-          case 'e':
+        case 'e':
             //gravar em arquivo
             campeonato.gravarEmArquivo(campeonato);
             break;
-          case 'f':
+        case 'f':
             //ler arquivo
-            // campeonato.lerDoArquivo();
+            campeonato.lerDoArquivo();
             break;
+        default:
+            System.out.println("Opcao invalida!");
       }
     }while(opcao != 'g');
   }
