@@ -62,12 +62,20 @@ public class Campeonato implements Serializable {
     }
 
     public void iniciarCampeonato(){
-        for(int i = 0; i < 13; i++)
-            for(int j = 0; j < qntJogadores; j++){
-                System.out.print("rolando dados para " + jogador[j].getNome() + "(" + jogador[j].getTipo() + ")...\n");
-                jogador[j].jogarDados();
-                jogador[j].escolherJogada();
-            }
+        if(qntJogadores > 0)
+            for(int i = 0; i < 13; i++)
+                for(int j = 0; j < qntJogadores; j++){
+                    if(jogador[j].getTotalJogadas() < 13){
+                        System.out.print("rolando dados para " + jogador[j].getNome() + "(" + jogador[j].getTipo() + ")...\n");
+                        jogador[j].jogarDados();
+                        jogador[j].escolherJogada();
+                    }
+                    else{
+                        System.out.println("Jogador " + jogador[j].getNome() + " ja fez todas as suas jogadas!\n");
+                    }
+                }
+        else
+                System.out.println("\nInsira um jogador para poder jogar!");
     }
 
     public void mostrarCartela(){
@@ -89,7 +97,23 @@ public class Campeonato implements Serializable {
         System.out.println("\n-----------------------------");
         System.out.print("Total: ");
         for(int i = 0; i < qntJogadores; i++)
-            System.out.print("\t" + jogador[i].getJogo().getTotal() + "\n");
+            System.out.print("\t" + jogador[i].getJogo().getTotal());
+        System.out.println();
+
+        if(qntJogadores > 1 && jogador[qntJogadores - 1].getTotalJogadas() >= 13){
+            int vencedor = 0;
+            boolean empate = false;
+            for(int i = 0; i < qntJogadores; i++){
+                if(jogador[vencedor].getJogo().getTotal() < jogador[i].getJogo().getTotal())
+                    vencedor = i;
+                else if(jogador[vencedor].getJogo().getTotal() == jogador[i].getJogo().getTotal() && vencedor != i)
+                    empate = true;
+            }   
+            if(empate == false)
+                System.out.println("\nParabens " + jogador[vencedor].getNome() + " voce ganhou com " + jogador[vencedor].getJogo().getTotal() + " pontos!!!");
+            else
+                System.out.println("Empate!");
+        }
     }
 
     public void gravarEmArquivo(Campeonato camp){
@@ -106,6 +130,27 @@ public class Campeonato implements Serializable {
             System.out.println("Dados Gravados com sucesso!");
         }
         catch(Exception e){
+            System.err.println("erro: " + e.toString());
+        }
+    }
+
+    public void lerDoArquivo(){
+        try{
+            FileInputStream fin = new FileInputStream(file);
+            ObjectInputStream oin = new ObjectInputStream(fin);
+
+            Campeonato camp = (Campeonato) oin.readObject();
+
+            oin.close();
+            fin.close();
+
+            for(int i = 0; i < 10; i++){
+                this.jogador[i] = camp.jogador[i];
+                this.qntJogadores = camp.qntJogadores;
+            }
+
+            System.out.println("Dados carregados com sucesso!");
+        }catch(Exception e){
             System.err.println("erro: " + e.toString());
         }
     }
