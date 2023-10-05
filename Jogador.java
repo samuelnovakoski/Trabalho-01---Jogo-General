@@ -5,6 +5,7 @@ public class Jogador implements Serializable{
     private String nome;
     private String tipo;
     private JogoGeneral jogoG = new JogoGeneral();
+    private int jogadasExecutadas = 0;
     
     public Jogador(){
         setNome();
@@ -48,6 +49,10 @@ public class Jogador implements Serializable{
         return jogoG;
     }
 
+    public int getTotalJogadas(){
+        return jogadasExecutadas;
+    }
+
     public void jogarDados(){
         jogoG.rolarDados();
         System.out.println(jogoG.toString());
@@ -66,14 +71,13 @@ public class Jogador implements Serializable{
     }
 
     public void escolherJogada(){
+
         Scanner scanner = new Scanner(System.in);
         if(getTipo() == 'H' || getTipo() == 'h'){
             System.out.println(toString());
-            int x;
-            do{
-                x = scanner.nextInt();
-                jogoG.validarJogada(x);
-            }while(x < 1 || x > 13 || jogoG.getJogadas()[x - 1] != -1);
+            int x = scanner.nextInt();
+            jogoG.validarJogada(x);
+            jogadasExecutadas++;
         }
         else
             System.out.println("Maquina") ;
