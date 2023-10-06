@@ -35,7 +35,7 @@ public class Jogador implements Serializable{
     }
 
     public void validarTipo(String tipo){
-        if(tipo.charAt(0) != 'H'  && tipo.charAt(0) != 'h' && tipo.charAt(0) != 'M')
+        if(tipo.charAt(0) != 'H'  && tipo.charAt(0) != 'h' && tipo.charAt(0) != 'M' && tipo.charAt(0) != 'm')
             System.out.print("Tipo invalido por favor insira um tipo valido");
         else
             this.tipo = tipo;
@@ -79,7 +79,13 @@ public class Jogador implements Serializable{
             jogoG.validarJogada(x);
             jogadasExecutadas++;
         }
-        else
-            System.out.println("Maquina") ;
+        else{
+            for(int i = 1; i <= 13; i++){
+                System.out.println(toString());
+                jogoG.validarJogada(i);
+                jogadasExecutadas++;
+            }
+        }
+
     }
 }

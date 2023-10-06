@@ -19,6 +19,7 @@ public class JogoGeneral implements Serializable{
             dados[i] = new Dado();
             dados[i].roll();
         }
+        ordenarDados();
     }
 
     public String toString(){
@@ -60,7 +61,7 @@ public class JogoGeneral implements Serializable{
                 System.out.println("A essa jogada já foi feita, por favor insira uma jogada que ainda não foi realizada");
             
             x = scanner.nextInt();
-        };
+        }
         pontuarJogada(x);
     }
 
@@ -151,30 +152,37 @@ public class JogoGeneral implements Serializable{
                     resultado = 25;
                 break;
             case 10:
-                ordenarDados();
-                boolean sequencia = true;
+                int highSeq = 0;
+                
+                if(dados[0].getSideUp() == 2)
+                    highSeq++;
 
                 for(int i = 0; i < dados.length - 1; i++){
-                    if(dados[i].getSideUp() + 1 != dados[i + 1].getSideUp()) 
-                        sequencia = false;
+                    if(dados[i].getSideUp() == (dados[i+1].getSideUp() - 1)) 
+                        highSeq++;
                 }
                 
-                if(sequencia == true)
-                    if(dados[0].getSideUp() == 1)
-                        resultado = 40;
+                if(highSeq == 5)
+                    resultado = 30;
+                else
+                    resultado = 0;
                 
                 break;
             case 11:
-                ordenarDados();
-                sequencia = true;
-                for(int i = 0; i < dados.length - 1; i++){
-                    if(dados[i].getSideUp() + 1 != dados[i + 1].getSideUp()) 
-                        sequencia = false;
-                }
+                int lowSeq = 0;
+
+                if(dados[0].getSideUp() == 1)
+                    lowSeq++;
                 
-                if(sequencia == true)
-                    if(dados[0].getSideUp() == 1)
-                        resultado = 40;
+                for(int i = 0; i < dados.length - 1; i++){
+                    if(dados[i].getSideUp() == (dados[i+1].getSideUp() - 1))
+                        lowSeq++;
+                }
+
+                if(lowSeq == 5)
+                    resultado = 40;
+                else
+                    resultado = 0;
                 
                 break;
             case 12:
@@ -206,12 +214,13 @@ public class JogoGeneral implements Serializable{
     }
 
     public void ordenarDados(){
+        int aux;
         for(int i = 0; i < dados.length; i++)
             for(int j = 0; j < dados.length - 1; j++)
-                if(dados[j].getSideUp() > dados[j + 1].getSideUp()){
-                    Dado aux = dados[j];
-                    dados[j] = dados[j + 1];
-                    dados[j + 1] = aux;
+                if(this.dados[j].getSideUp() > this.dados[j + 1].getSideUp()){
+                    aux = this.dados[j].getSideUp();
+                    this.dados[j].setSideUp(this.dados[j+1].getSideUp());
+                    this.dados[j + 1].setSideUp(aux);
                 }
     }
 }

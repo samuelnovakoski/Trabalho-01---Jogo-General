@@ -8,6 +8,10 @@ public class Dado implements Serializable{
         sideUp = 1;
     }
 
+    public Dado(int n){
+        sideUp = n;
+    }
+
     public void roll(){
         Random x = new Random();
         sideUp = x.nextInt(6) + 1;
@@ -15,6 +19,10 @@ public class Dado implements Serializable{
 
     public int getSideUp(){
         return sideUp;
+    }
+
+    public void setSideUp(int n){
+        sideUp = n;
     }
 
     public String toString(){
