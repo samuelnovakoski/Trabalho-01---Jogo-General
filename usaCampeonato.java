@@ -16,9 +16,9 @@ public class usaCampeonato{
       System.out.println("|  a - Adicionar Jogador                     |");
       System.out.println("|  b - Remover Jogador                       |");
       System.out.println("|  c - Executar jogada                       |");
-      System.out.println("|  d - Mostrar resultados da ultima rodada   |");
+      System.out.println("|  d - Mostrar Cartela de resultados         |");
       System.out.println("|  e - Gravar dados do campeonato em arquivo |");
-      System.out.println("|  f - Ler dados do campeonato em arquivo    |");
+      System.out.println("|  f - Ler dados do campeonato de arquivo    |");
       System.out.println("|  g - Sair da aplicacao                     |");
       System.out.println("|____________________________________________|");
       System.out.print(" Escolha uma opcao: ");
@@ -50,7 +50,7 @@ public class usaCampeonato{
             campeonato.lerDoArquivo();
             break;
         case 'g':
-            System.out.println("Obrigado por jogar!\n");
+            System.out.println("Obrigado por jogar!! :)");
             break;
         default:
             System.out.println("Opcao invalida!");
