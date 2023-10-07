@@ -31,26 +31,30 @@ public class Campeonato implements Serializable {
     }
 
     public void removerJogador(){
-        Scanner scanner = new Scanner(System.in);
-        listaJogadores();
-        System.out.println("Informe o nome do jogador que deseja remover: ");
-        String nome = scanner.nextLine();
-        int removido = 0;
+        if(qntJogadores > 0){
+            Scanner scanner = new Scanner(System.in);
+            listaJogadores();
+            System.out.println("Informe o nome do jogador que deseja remover: ");
+            String nome = scanner.nextLine();
+            int removido = 0;
 
-        for(int i = 0; i < qntJogadores; i++)
-            if(jogador[i].getNome().equals(nome)){
-                for(int j = i; j < qntJogadores; j++)
-                    jogador[j] = jogador[j + 1];
-                
-                jogador[qntJogadores - 1] = null;
-                qntJogadores--;
-                removido++;
+            for(int i = 0; i < qntJogadores; i++)
+                if(jogador[i].getNome().equals(nome)){
+                    for(int j = i; j < qntJogadores; j++)
+                        jogador[j] = jogador[j + 1];
+                    
+                    jogador[qntJogadores - 1] = null;
+                    qntJogadores--;
+                    removido++;
 
-                System.out.println("\nJogador " + nome + " removido com sucesso!\n");
-                break;
-            }
-        if(removido == 0)
-            System.out.println("\nNao foi possivel encontrar o jogador " + nome);
+                    System.out.println("\nJogador " + nome + " removido com sucesso!\n");
+                    break;
+                }
+            if(removido == 0)
+                System.out.println("\nNao foi possivel encontrar o jogador " + nome);
+        }
+        else
+            System.out.println("Nao existem jogadores no momento");
     }
 
     public void listaJogadores(){
@@ -62,20 +66,25 @@ public class Campeonato implements Serializable {
     }
 
     public void iniciarCampeonato(){
-        if(qntJogadores > 0)
-            for(int i = 0; i < 13; i++)
-                for(int j = 0; j < qntJogadores; j++){
-                    if(jogador[j].getTotalJogadas() < 13){
-                        System.out.print("rolando dados para " + jogador[j].getNome() + "(" + jogador[j].getTipo() + ")...\n");
-                        jogador[j].jogarDados();
-                        jogador[j].escolherJogada();
+        if(qntJogadores > 0){
+            if(jogador[qntJogadores - 1].getTotalJogadas() < 13)
+                for(int i = 0; i < 13; i++)
+                    for(int j = 0; j < qntJogadores; j++){
+                        if(jogador[j].getTotalJogadas() < 13){
+                            System.out.print("rolando dados para " + jogador[j].getNome() + "(" + jogador[j].getTipo() + ")...\n");
+                            jogador[j].jogarDados();
+                            jogador[j].escolherJogada();
+                        }
+                        else{
+                            System.out.println("Jogador " + jogador[j].getNome() + " ja fez todas as suas jogadas!\n");
+                        }
                     }
-                    else{
-                        System.out.println("Jogador " + jogador[j].getNome() + " ja fez todas as suas jogadas!\n");
-                    }
-                }
+            else   
+                System.out.println("Todos os jogadores ja executaram suas jogadas");
+        }
         else
-                System.out.println("\nInsira um jogador para poder jogar!");
+                System.out.println("\nAdicione um novo jogador para poder jogar!");
+
     }
 
     public void mostrarCartela(){
