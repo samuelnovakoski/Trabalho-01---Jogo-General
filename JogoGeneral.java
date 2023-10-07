@@ -1,7 +1,5 @@
 import java.io.Serializable;
-import java.lang.reflect.Array;
 import java.util.Scanner;
-import java.util.Arrays;
 
 public class JogoGeneral implements Serializable{
     private Dado dados[] = new Dado[5];
