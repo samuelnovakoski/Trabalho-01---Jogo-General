@@ -92,7 +92,7 @@ public class Jogador implements Serializable{
             maquina();
     }
 
-    private void maquina(){
+    public void maquina(){
         jogadasExecutadas++;
         System.out.println(toString());
         jogoG.validarJogada(jogadasExecutadas);

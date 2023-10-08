@@ -63,7 +63,7 @@ public class JogoGeneral implements Serializable{
         pontuarJogada(x);
     }
 
-    private void pontuarJogada(int x) {
+    public void pontuarJogada(int x) {
         resultado = 0;
         switch(x){
             case 1:
