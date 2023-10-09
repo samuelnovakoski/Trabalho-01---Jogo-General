@@ -2,16 +2,20 @@ import java.io.Serializable;
 import java.util.Scanner;
 
 public class JogoGeneral implements Serializable{
+    //atributos
     private Dado dados[] = new Dado[5];
     private int jogadas[] = new int[13];
     private int total = 0;
     private int resultado = 0;
     
+    //métodos
+    //construtor padrão
     public JogoGeneral(){
         for(int i = 0; i < 13; i++)
             jogadas[i] = -1;
     }
 
+    //rolagem de dados para o array 
     public void rolarDados(){
         for(int i = 0; i < dados.length; i++){
             dados[i] = new Dado();
@@ -33,14 +37,17 @@ public class JogoGeneral implements Serializable{
         return "valores obtidos: " + s;
     }
 
+    //retorna as jogadas
     public int[] getJogadas(){
         return jogadas;
     }
 
+    //retorna os dados
     public Dado[] getDados(){
         return dados;
     }
 
+    //retorna o total de pontos feitos
     public int getTotal(){
         total = 0;
         for(int i = 0; i < 13; i++)
@@ -49,6 +56,7 @@ public class JogoGeneral implements Serializable{
         return total;
     }
 
+    //valida a jogada escolhida (se já foi feita ou não)
     public void validarJogada(int x){
         Scanner scanner = new Scanner(System.in);
         
@@ -63,6 +71,7 @@ public class JogoGeneral implements Serializable{
         pontuarJogada(x);
     }
 
+    //pontua a jogada escolhida de acordo com as regras de cada tipo
     public void pontuarJogada(int x) {
         resultado = 0;
         switch(x){
@@ -211,6 +220,7 @@ public class JogoGeneral implements Serializable{
         jogadas[x - 1] = resultado;
     }
 
+    //ordena os dados
     public void ordenarDados(){
         int aux;
         for(int i = 0; i < dados.length; i++)

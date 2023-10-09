@@ -8,10 +8,13 @@ import java.io.ObjectInputStream;
 import java.io.Serializable;
 
 public class Campeonato implements Serializable {
+    //atributos
     private Jogador[] jogador = new Jogador[10];
     private int qntJogadores = 0;
     private File file = new File("general.dat");
 
+    //métodos
+    //construtor padrão
     public void incluirJogador(){
         int cont = 0;
         for(int i = 0; i < jogador.length; i++)
@@ -30,6 +33,7 @@ public class Campeonato implements Serializable {
             System.out.println("\nJogador adicionado com sucesso!\n");
     }
 
+    //remove jogador
     public void removerJogador(){
         if(qntJogadores > 0){
             Scanner scanner = new Scanner(System.in);
@@ -57,6 +61,7 @@ public class Campeonato implements Serializable {
             System.out.println("Nao existem jogadores no momento");
     }
 
+    //mostra a lista de jogadores
     public void listaJogadores(){
         for(int i = 0; i < qntJogadores; i++)
             if(i < qntJogadores - 1)
@@ -65,6 +70,7 @@ public class Campeonato implements Serializable {
                 System.out.println(jogador[i].getNome());
     }
 
+    //inicia o jogo, rolando os dados de cada jogador e pedindo que escolha a jogada
     public void iniciarCampeonato(){
         if(qntJogadores > 0){
             if(jogador[qntJogadores - 1].getTotalJogadas() < 13)
@@ -86,7 +92,8 @@ public class Campeonato implements Serializable {
                 System.out.println("\nAdicione um novo jogador para poder jogar!");
 
     }
-
+    
+    //mostra a(s) cartela(s) de jogadas
     public void mostrarCartela(){
         System.out.println("\t----Cartela de resultados----");
 
@@ -124,7 +131,8 @@ public class Campeonato implements Serializable {
                 System.out.println("Empate!");
         }
     }
-
+    
+    //salva os dados do campeonato em arquivo
     public void gravarEmArquivo(Campeonato camp){
         try{
             FileOutputStream fout = new FileOutputStream(file);
@@ -143,6 +151,7 @@ public class Campeonato implements Serializable {
         }
     }
 
+    //carrega dados de um arquivo salvo previamente
     public void lerDoArquivo(){
         try{
             FileInputStream fin = new FileInputStream(file);
