@@ -21,7 +21,6 @@ public class JogoGeneral implements Serializable{
             dados[i] = new Dado();
             dados[i].roll();
         }
-        ordenarDados();
     }
 
     public String toString(){
@@ -62,9 +61,9 @@ public class JogoGeneral implements Serializable{
         
         while(x < 1 || x > 13 || jogadas[x - 1] != -1){
             if(x < 1 || x > 13)
-                System.out.println("jogada invalida por favor insira uma jogada valida");
+                System.out.println("jogada invalida por favor insira uma jogada valida [1 - 13]");
             else if(jogadas[x - 1] != -1)
-                System.out.println("A essa jogada já foi feita, por favor insira uma jogada que ainda não foi realizada");
+                System.out.println("Essa jogada ja foi feita, por favor insira uma jogada que ainda nao foi realizada");
             
             x = scanner.nextInt();
         }
@@ -159,6 +158,7 @@ public class JogoGeneral implements Serializable{
                     resultado = 25;
                 break;
             case 10:
+                ordenarDados();
                 int highSeq = 0;
                 
                 if(dados[0].getSideUp() == 2)
@@ -171,11 +171,10 @@ public class JogoGeneral implements Serializable{
                 
                 if(highSeq == 5)
                     resultado = 30;
-                else
-                    resultado = 0;
                 
                 break;
             case 11:
+                ordenarDados();
                 int lowSeq = 0;
 
                 if(dados[0].getSideUp() == 1)
@@ -188,8 +187,6 @@ public class JogoGeneral implements Serializable{
 
                 if(lowSeq == 5)
                     resultado = 40;
-                else
-                    resultado = 0;
                 
                 break;
             case 12:
