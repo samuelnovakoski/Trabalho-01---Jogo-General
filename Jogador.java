@@ -79,20 +79,20 @@ public class Jogador implements Serializable{
         String s = "";
 
         if(getTipo() == 'H' || getTipo() == 'h')
-            s += "\nPara qual jogada deseja marcar: [1 - 13] " + getNome() + "?\n1 2 3 4 5 6 7(T) 8(Q) 9(F) 10(S+) 11(S-) 12(G) 13(X)\n";
+            s += "\nPara qual jogada deseja marcar: [1 - 13] " + getNome() + "?\n1\t2\t3\t4\t5\t6\t7(T)\t8(Q)\t9(F)\t10(S+)\t11(S-)\t12(G)\t13(X)\n";
         else
             s += "\nJogada escolhida por " + getNome() + "(" + getTipo() + ") [1 - 13]: " + jogadasExecutadas + "\n";
 
         for(int i = 0; i < 13; i++){
             if(jogoG.getJogadas()[i] == -1)
-                s += "- ";
+                s += "-\t";
             else
-                s += jogoG.getJogadas()[i] + " ";
+                s += jogoG.getJogadas()[i] + "\t";
         }
         return s;
     }
     
-    //escolhe a jogada
+    //verifica o tipo do jogador, se for do tipo humano ele escolhe a jogada, se não chama a máquina
     public void escolherJogada(){
         Scanner scanner = new Scanner(System.in);
         if(getTipo() == 'H' || getTipo() == 'h'){
