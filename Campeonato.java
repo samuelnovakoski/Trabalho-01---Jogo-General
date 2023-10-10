@@ -14,7 +14,7 @@ public class Campeonato implements Serializable {
     private File file = new File("general.dat");
 
     //métodos
-    //construtor padrão
+    //construtor padrão, variavel cont está ali para gerar o primeiro jogador então passa para o segundo para não gerar jogadores repetidos
     public void incluirJogador(){
         int cont = 0;
         for(int i = 0; i < jogador.length; i++)
@@ -23,17 +23,17 @@ public class Campeonato implements Serializable {
                 cont++;
             }
         
-            for(int i = 1; i < jogador.length; i++)
-                for(int j = 0; j < i; j++)
-                    if(jogador[j] != null && jogador[i] != null)
-                        if(jogador[j].getNome() == jogador[i].getNome())
-                            jogador[i] = new Jogador();
+        for(int i = 1; i < jogador.length; i++)
+            for(int j = 0; j < i; j++)
+                if(jogador[j] != null && jogador[i] != null)
+                    if(jogador[j].getNome() == jogador[i].getNome())
+                        jogador[i] = new Jogador();
 
-            qntJogadores++;
-            System.out.println("\nJogador adicionado com sucesso!\n");
+        qntJogadores++;
+        System.out.println("\nJogador adicionado com sucesso!\n");
     }
 
-    //remove jogador
+    //lista o nome dos jogadores participantes, procura pelo nome do jogador desejado para remover e então o remove
     public void removerJogador(){
         if(qntJogadores > 0){
             Scanner scanner = new Scanner(System.in);
