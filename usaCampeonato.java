@@ -50,6 +50,7 @@ public class usaCampeonato{
             campeonato.lerDoArquivo();
             break;
         case 'g':
+            //sair da aplicação
             System.out.println("Obrigado por jogar!! :)");
             break;
         default:
